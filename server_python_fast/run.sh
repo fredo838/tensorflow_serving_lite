@@ -1,0 +1,1 @@
+docker run --env PORT=8080 --cpus 1 --memory 4G --rm -it -p 8080:8080 --name server eu.gcr.io/colab-keep-alive/server_python_fast

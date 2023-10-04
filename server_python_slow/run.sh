@@ -1,0 +1,1 @@
+docker run --env PORT=8080 --rm -it -p 8080:8080 --name server eu.gcr.io/colab-keep-alive/server_python_slow
