@@ -1,0 +1,7 @@
+FROM python:3
+RUN python3 -m pip install requests
+RUN mkdir /app
+COPY * /app/
+WORKDIR /app
+ENV PYTHONUNBUFFERED 1
+ENTRYPOINT ["python3", "test_server_local.py"]

@@ -1,0 +1,1 @@
+cd generate_model && docker build -t generatemodel . && docker run --mount type=bind,source=$(pwd)/../assets/saved_model,target=/app/saved_model generatemodel $1
