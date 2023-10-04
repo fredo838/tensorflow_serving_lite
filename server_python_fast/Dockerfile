@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
 RUN python3 -m pip install pip --upgrade
 RUN python3 -m pip install numpy gunicorn tflite_runtime flask pillow
 COPY model.tflite /server/model.tflite
