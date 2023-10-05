@@ -21,8 +21,8 @@ Call to server_python_slow  took 47034.02 ms
 Call to server_python_fast  took 4222.86 ms (11 times faster than server_python_slow)
 Call to server_rust_fastest took 1397.38 ms (35 times faster than server_python_slow)
 ```
-Calling each of these microservices *not* from a "Cold Start", aka the `Cloud Run` instance is 
-still running, then a call to _each_ of these microservicestakes about `~300 ms`.
+Calling one of these microservices *not* from a "Cold Start", aka the `Cloud Run` instance is 
+still running, will take about `~300 ms`, _no matter which one_.
 
 
 ### Steps
