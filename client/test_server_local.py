@@ -14,12 +14,18 @@ def load_image():
 
 if __name__ == "__main__":
     # url = "http://localhost:8000"
-    url = "http://server:8080"
+    base_url = "http://server:8080"
     image_array = load_image()
-    print(image_array.shape)
-    payload = {"image_array": image_array.tolist()}
-    # print(payload)
-    result = requests.post(f"{url}/predict", json=image_array.tolist())
-    print(result.status_code)
+
+    url = f"{base_url}/predict"
+    payload = image_array.tolist()
+    start_time = time.time()
+    # for tfserving
+    # payload = {"instances": image_array.tolist()}
+    # url = f"{base_url}/v1/models/model:predict"
+
+    result = requests.post(f"{url}", json=payload)
+    print(f"$$$$ Inference took {1000 * (time.time() - start_time)} ms, status {result.status_code}")
     if result.status_code != 200:
         print(result.text)
+

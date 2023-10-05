@@ -1,6 +1,6 @@
 {
     "rust-analyzer.linkedProjects": [
-        "server_rust_fastest/server/Cargo.toml"
+        "server_rust_tflite/server/Cargo.toml"
     ],
     "rust-analyzer.cargo.extraEnv": {
         "TFLITEC_PREBUILT_PATH": "${workspaceFolder}/libtensorflowlite_c.so"

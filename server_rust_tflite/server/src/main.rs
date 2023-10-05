@@ -17,6 +17,15 @@ pub struct MyData {
     image_array: Vec<Vec<Vec<f32>>>,
 }
 
+fn flatten(input: Vec<Vec<Vec<f32>>>) -> Vec<f32> {
+    input
+        .into_iter()
+        .flat_map(|inner_vec| inner_vec.into_iter())
+        .flat_map(|inner_vec| inner_vec.into_iter())
+        .collect()
+}
+
+
 fn get_current_time() -> u128 {
     let start = SystemTime::now();
     let since_the_epoch = start
@@ -37,18 +46,6 @@ fn call_interpreter(
     output_vector
 }
 
-/*
-fn resize_image(base64_encoded_string: &str) -> Vec<f32> {
-    let decoded_bytes = general_purpose::STANDARD
-        .decode(base64_encoded_string)
-        .unwrap();
-    let converted_checked = load_from_memory(&decoded_bytes).unwrap();
-    let rgb = converted_checked.to_rgb32f();
-    let rgb_resized = resize(&rgb, 224, 224, CatmullRom);
-    let rgb_vec = rgb_resized.into_vec();
-    rgb_vec
-}
-*/
 
 #[derive(Default, Clone)]
 struct LiftOffTimer {}
@@ -78,8 +75,8 @@ async fn hello(
     payload: Json<MyData>,
     threadsafe_interpreter: &State<ThreadSafeInterpreter>,
 ) -> Value {
-    // let rgb_vec = &payload.image_array;
-    let rgb_vec = vec![0.0, 0.0, 0.0];
+    let rgb_vec = &payload.image_array;
+    let rgb_vec = flatten(rgb_vec.to_owned());
     let interpreter = threadsafe_interpreter.mutexed_interpreted.lock().unwrap();
     let now: Instant = Instant::now();
     let output_vector = call_interpreter(interpreter, &rgb_vec);
