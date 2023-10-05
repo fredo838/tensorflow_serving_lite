@@ -2,7 +2,7 @@
 
 If you serve your Tensorflow model as a Tensorflow Lite model you 
 can drastically reduce cold start time when hosting in a Serverless environment. This repository
-proves by how much - and it's more than you'ld think.
+proves by how much - and it's more than you would think.
 
 ## Rationale
 
