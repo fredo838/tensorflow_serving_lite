@@ -10,7 +10,7 @@ There's currently three microservices in this repository that serve the same Ten
  - `server_python_fast`, written in `python`, with dependencies `gunicorn`, `flask` and `tflite_runtime`
  - `server_rust_fastest`, written in `Rust`, with depencies `Rocket` and `tflitec`
 
-which all serve a `MobileNet`. If we deploy them to `GCP`'s `Cloud Run`,
+which all serve a `MobileNet`, which is `~ 19 Mb` in size (!). If we deploy them to `GCP`'s `Cloud Run`,
 we see that a request to each of them takes a different amount of time to complete if we 
 are calling them from a "Cold Start", aka the microservice has not been called for >15 minutes:
 ```
@@ -18,10 +18,14 @@ Call to server_python_slow  took 47034.02 ms
 Call to server_rust_fastest took 1397.38 ms
 Call to server_python_fast  took 4222.86 ms
 ```
-Which in short means:
- - Serving a model in `python` which `import`s the full `tensorflow` library takes `~ 47 seconds` on cold start.
- - Serving a model in `python` which `import`s the `tflite_runtime` library takes `~ 4.2 seconds` on cold start.
- - Serving a model in `rust` which `use`s the `tflitec` crate takes `~ 1.4 seconds` on cold start.
+Calling each of these microservices *not* from a "Cold Start", aka `Cloud Run` instance is 
+still running, then a call to _each_ of these microservicestakes about `~300 ms`.
+
+*Conclusion*: If we want to deploy our `Tensorflow` model in a Serverless environment, we can 
+increase the responsiveness of the model by exploiting `Tensorflow Lite`. The smaller the model, 
+the bigger the relative gain, but always a gain - nothing to lose - unless the model uses 
+operations not supported by `Tensorflow Lite`, which is still almost all operations.
+
 ### Steps
 1) First we need a `SavedModel`. You can use your own `SavedModel`, but we'll generate one
 by running `bash generate/run.sh`. This will run a docker container that saves a `MobileNet` model
