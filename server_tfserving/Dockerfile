@@ -1,0 +1,2 @@
+FROM tensorflow/serving
+COPY saved_model
