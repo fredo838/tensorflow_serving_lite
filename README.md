@@ -13,7 +13,7 @@ There's currently three microservices in this repository that serve the same Ten
 
 which all serve a `MobileNet`, which is `~ 19 Mb` in size - aka a small model. We deploy each
 of them to `GCP`'s `Cloud Run`, their Serverless environment. If we now call each in a "Cold Start" setting,
-which means the microservice is not ready to serve traffic in the Serverless environment and needs to be "spun up"
+which means the microservice needs to be "spun up"
 before it's able to receive a request, we see that the different microservices take a different amount of time to
 process that first request:
 ```
