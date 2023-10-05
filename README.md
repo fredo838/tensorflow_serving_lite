@@ -25,7 +25,7 @@ Calling one of these microservices *not* from a "Cold Start", aka the `Cloud Run
 still running, will take about `~300 ms`, _no matter which one_.
 
 
-### Steps
+## Serving your own model with Tensorflow Lite
 1) First we need a `SavedModel`. You can use your own `SavedModel`, but we'll generate one
 by running `bash generate/run.sh`. This will run a docker container that saves a `MobileNet` model
 to the `saved_model`folder (locally).
