@@ -1,4 +1,5 @@
 PROJECT_NAME=$1
+bash server_rust_tflite/build.sh && 
 docker tag server_rust_tflite eu.gcr.io/${PROJECT_NAME}/server_rust_tflite
 docker push eu.gcr.io/${PROJECT_NAME}/server_rust_tflite
 gcloud run deploy \

@@ -1,6 +1,7 @@
 PROJECT_NAME=$1
-docker tag server_tfserving eu.gcr.io/${PROJECT_NAME}/server_python_tfserving
-docker push eu.gcr.io/${PROJECT_NAME}/server_tfserving
+bash server_tfserving/build.sh && \
+docker tag server_tfserving eu.gcr.io/${PROJECT_NAME}/server_python_tfserving && \
+docker push eu.gcr.io/${PROJECT_NAME}/server_tfserving && \
 gcloud run deploy \
   --platform managed \
   --region europe-west1 \

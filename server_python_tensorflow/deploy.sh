@@ -1,6 +1,7 @@
 PROJECT_NAME=$1
-docker tag server_python_tensorflow eu.gcr.io/${PROJECT_NAME}/server_python_tensorflow
-docker push eu.gcr.io/${PROJECT_NAME}/server_python_tensorflow
+bash server_python_tensorflow/build.sh && \
+docker tag server_python_tensorflow eu.gcr.io/${PROJECT_NAME}/server_python_tensorflow && \
+docker push eu.gcr.io/${PROJECT_NAME}/server_python_tensorflow && \
 gcloud run deploy \
   --platform managed \
   --region europe-west1 \

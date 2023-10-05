@@ -1,6 +1,7 @@
 PROJECT_NAME=$1
-docker tag server_python_fast eu.gcr.io/${PROJECT_NAME}/server_python_tflite
-docker push eu.gcr.io/${PROJECT_NAME}/server_python_tflite
+bash server_python_tflite/build.sh && \
+docker tag server_python_fast eu.gcr.io/${PROJECT_NAME}/server_python_tflite && \
+docker push eu.gcr.io/${PROJECT_NAME}/server_python_tflite && \
 gcloud run deploy \
   --platform managed \
   --region europe-west1 \
