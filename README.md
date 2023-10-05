@@ -11,7 +11,8 @@ There's currently three microservices in this repository that serve the same Ten
  - `server_rust_fastest`, written in `Rust`, with depencies `Rocket` and `tflitec`
 
 which all serve a `MobileNet`. If we deploy them to `GCP`'s `Cloud Run`,
-we see that a request to each of them takes a different amount of time to complete:
+we see that a request to each of them takes a different amount of time to complete if we 
+are calling them from a "Cold Start", aka the microservice has not been called for >15 minutes:
 ```
 Call to server_python_slow  took 47034.02 ms
 Call to server_rust_fastest took 1397.38 ms
