@@ -1,7 +1,8 @@
 ## TL;DR 
 
 If you serve your Tensorflow model as a Tensorflow Lite model you 
-can drastically reduce cold start time when hosting in a Serverless environment.
+can drastically reduce cold start time when hosting in a Serverless environment. This repository
+proves by how much.
 
 ## Rationale
 
@@ -11,21 +12,18 @@ There's currently three microservices in this repository that serve the same Ten
  - `server_rust_fastest`, written in `Rust`, with depencies `Rocket` and `tflitec`
 
 which all serve a `MobileNet`, which is `~ 19 Mb` in size - aka a small model. We deploy each
-of them to `GCP`'s `Cloud Run`, their Serverless environment. If we now call each in a  a "Cold Start" setting,
+of them to `GCP`'s `Cloud Run`, their Serverless environment. If we now call each in a "Cold Start" setting,
 which means the microservice is not ready to serve traffic in the Serverless environment and needs to be "spun up"
-before it's able to receive a request, we see that the different microservices take a different amount of time:
+before it's able to receive a request, we see that the different microservices take a different amount of time to
+process that first request:
 ```
 Call to server_python_slow  took 47034.02 ms
 Call to server_python_fast  took 4222.86 ms (11 times faster than server_python_slow)
 Call to server_rust_fastest took 1397.38 ms (35 times faster than server_python_slow)
 ```
-Calling each of these microservices *not* from a "Cold Start", aka `Cloud Run` instance is 
+Calling each of these microservices *not* from a "Cold Start", aka the `Cloud Run` instance is 
 still running, then a call to _each_ of these microservicestakes about `~300 ms`.
 
-*Conclusion*: If we want to deploy our `Tensorflow` model in a Serverless environment, we can 
-increase the responsiveness of the model by exploiting `Tensorflow Lite`. The smaller the model, 
-the bigger the relative gain, but always a gain - nothing to lose - unless the model uses 
-operations not supported by `Tensorflow Lite`, which is still almost all operations.
 
 ### Steps
 1) First we need a `SavedModel`. You can use your own `SavedModel`, but we'll generate one
