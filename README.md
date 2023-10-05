@@ -9,6 +9,7 @@ There's currently three microservices in this repository that serve the same Ten
  - `server_python_slow`, written in `python`, with dependencies `gunicorn`, `flask` and the full `tensorflow` 
  - `server_python_fast`, written in `python`, with dependencies `gunicorn`, `flask` and `tflite_runtime`
  - `server_rust_fastest`, written in `Rust`, with depencies `Rocket` and `tflitec`
+
 which all serve a `MobileNet`. If we deploy them of `GCP`'s managed `Cloud Run`, their Serverless environment,
 we see that a request to each of them takes a different amount of time to complete:
 ```
