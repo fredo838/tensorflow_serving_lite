@@ -10,13 +10,14 @@ There's currently three microservices in this repository that serve the same Ten
  - `server_python_fast`, written in `python`, with dependencies `gunicorn`, `flask` and `tflite_runtime`
  - `server_rust_fastest`, written in `Rust`, with depencies `Rocket` and `tflitec`
 
-which all serve a `MobileNet`, which is `~ 19 Mb` in size (!). If we deploy them to `GCP`'s `Cloud Run`,
-we see that a request to each of them takes a different amount of time to complete if we 
-are calling them from a "Cold Start", aka the microservice has not been called for >15 minutes:
+which all serve a `MobileNet`, which is `~ 19 Mb` in size - aka a small model. We deploy each
+of them to `GCP`'s `Cloud Run`, their Serverless environment. If we now call each in a  a "Cold Start" setting,
+which means the microservice is not ready to serve traffic in the Serverless environment and needs to be "spun up"
+before it's able to receive a request, we see that the different microservices take a different amount of time:
 ```
 Call to server_python_slow  took 47034.02 ms
-Call to server_rust_fastest took 1397.38 ms
-Call to server_python_fast  took 4222.86 ms
+Call to server_python_fast  took 4222.86 ms (11 times faster than server_python_slow)
+Call to server_rust_fastest took 1397.38 ms (35 times faster than server_python_slow)
 ```
 Calling each of these microservices *not* from a "Cold Start", aka `Cloud Run` instance is 
 still running, then a call to _each_ of these microservicestakes about `~300 ms`.
